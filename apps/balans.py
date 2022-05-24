@@ -22,7 +22,7 @@ def buildMain():
         main_matrix, end_pruducts = read.readBigMainMatrix(sheet)
         error = False
         try:
-            st.table(pd.DataFrame(main_matrix))
+            (pd.DataFrame(main_matrix))
         except StreamlitAPIException:
             error = True
             st.error("Этот файл не подходит для расчета. Пожалуйста, проверьте шаблон таблицы в описании.")
