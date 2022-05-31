@@ -112,6 +112,37 @@ def readBigMainMatrix(sheet):
     return main_matrix, end_pruducts
 
 
+def checkFormat(checksheet):
+    error = False
+    sheet = readDocument('excelFiles/templates/data.xlsx')
+    row_names, itogo_by_col, end_pruducts, val_price = readByRow(checksheet)
+    row_names1, itogo_by_col1, end_pruducts1, val_price1 = readByRow(sheet)
+    try:
+        if row_names[-1] == row_names1[-1] and row_names[-2] == row_names1[-2] and row_names[-3] == row_names1[-3]:
+            error = True
+    except IndexError:
+        pass
+    return error
+
+
+def checkFormatBalans(checksheet):
+    error = False
+    main_matrix, end_products = (readBigMainMatrix(checksheet))
+    rows = len(main_matrix)
+    columns = len(main_matrix[0])
+    if rows != columns:
+        error = True
+    rows = len(end_products)
+    if rows != columns:
+        error = True
+    return error
+
+
+
+
+
+
+
 
 
 

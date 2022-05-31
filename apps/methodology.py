@@ -86,11 +86,19 @@ def buildMain():
 
     st.write("---")
     st.subheader("Проверить основное балансовое соотношение")
-    st.image(image=Image.open('static/176.png'),
-             caption='Экономико-математическая модель межотраслевого баланса')
+
+    col1, col2, col3 = st.columns([2,6,1])
+
+    with col1:
+        st.write("")
+
+    with col2:
+        st.image(image=Image.open('static/176.png'),use_column_width=False, caption='Экономико-математическая модель межотраслевого баланса')
+
+    with col3:
+        st.write("")
     st.latex(r'''
                \sum_{i=1}^{n} X_i = \sum_{j=1}^{n} X_j
               ''')
 
 
-buildMain()

@@ -23,41 +23,21 @@ def buildMain():
     if uploaded_file:
         path = read.save_uploadedfile(uploaded_file)
         sheet = read.readDocument(path)
-        main_matrix = read.readMainMatrix(sheet)
-        row_names, itogo_by_col, end_pruducts, val_price = read.readByRow(sheet)
-        koef_pryamyx_zatrat = read.koef_prymyx_zatrat(main_matrix, val_price)
-        if koef_pryamyx_zatrat == 0:
-            path = read.save_uploadedfile(uploaded_file)
-            sheet = read.readDocument(path)
-            main_matrix, end_pruducts = read.readBigMainMatrix(sheet)
-            itogo_by_row = []
-            for matrix in main_matrix:
-                sum_by_row = 0
-                for value in matrix:
-                    sum_by_row += value
-                itogo_by_row.append(sum_by_row)
-            val_price = []
-            for i in range(len(end_pruducts)):
-                value = end_pruducts[i] + itogo_by_row[i]
-                val_price.append(value)
+        if read.checkFormat(sheet):
+            main_matrix = read.readMainMatrix(sheet)
+            row_names, itogo_by_col, end_pruducts, val_price = read.readByRow(sheet)
             koef_pryamyx_zatrat = read.koef_prymyx_zatrat(main_matrix, val_price)
 
-
-        else:
             st.markdown("***")
 
             st.write("""Коэффициенты прямых затрат: $a_{ij} = x_{ij} / x_j$ """)
-            # print(row_names)
             st.table(pd.DataFrame(koef_pryamyx_zatrat))
-            # st.line_chart(pd.DataFrame(koef_pryamyx_zatrat))
 
             st.write("---")
 
             st.write("Обратная матрица: $(E-A)-1$")
             inv_matrix = read.getInverseMatrix(koef_pryamyx_zatrat)
             st.table(pd.DataFrame(inv_matrix))
-            # st.line_chart(pd.DataFrame(inv_matrix))
-
             st.write("---")
 
             with st.container():
@@ -77,25 +57,28 @@ def buildMain():
                         var = round(matrixX[i] - sum[i], 2)
                         res.append(var)
                     st.table(pd.DataFrame(res))
+                import xlsxwriter
+                from io import BytesIO
 
-        import xlsxwriter
-        from io import BytesIO
+                output = BytesIO()
 
-        output = BytesIO()
+                # Write files to in-memory strings using BytesIO
+                # See: https://xlsxwriter.readthedocs.io/workbook.html?highlight=BytesIO#constructor
+                workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+                worksheet = workbook.add_worksheet()
 
-        # Write files to in-memory strings using BytesIO
-        # See: https://xlsxwriter.readthedocs.io/workbook.html?highlight=BytesIO#constructor
-        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
-        worksheet = workbook.add_worksheet()
+                row = 0
+                for col, data in enumerate(koef_pryamyx_zatrat):
+                    worksheet.write_column(row, col, data)
+                workbook.close()
 
-        row = 0
-        for col, data in enumerate(koef_pryamyx_zatrat):
-            worksheet.write_column(row, col, data)
-        workbook.close()
+                st.download_button(
+                    label="Скачать таблицу",
+                    data=output.getvalue(),
+                    file_name="Прямые Затраты.xlsx",
+                    mime="application/vnd.ms-excel"
+                )
+        else:
+            st.error("Этот файл не подходит для расчета. Пожалуйста, проверьте шаблон таблицы в описании.")
 
-        st.download_button(
-            label="Скачать таблицу",
-            data=output.getvalue(),
-            file_name="Прямые Затраты.xlsx",
-            mime="application/vnd.ms-excel"
-        )
+
