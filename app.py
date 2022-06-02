@@ -5,7 +5,7 @@ st.set_page_config(
     layout="wide",
     # initial_sidebar_state="expanded",
     menu_items={
-        'Get help': 'https://wa.link/99i079',
+        'Get help': 'https://docs.google.com/document/d/1y2W8h1uf3Ked1m4Ez0UbAwxkS9ygWQ1YqQ2oA3Q7clg/edit?usp=sharing',
         'Report a bug': "https://wa.link/99i079",
         'About': "От Научно-производственный центр «Геодезия и картография» для рассчета МОБ!"
     }
@@ -20,7 +20,7 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 import streamlit_authenticator as stauth
 import auth.authreader
 from multiapp import MultiApp
-from apps import main, trudAndFond, testcase, landing, methodology
+from apps import main, trudAndFond, balans, landing, methodology
 
 
 names = auth.authreader.getNames()
@@ -44,12 +44,19 @@ if st.session_state['authentication_status']:
     app.add_app("Методология", methodology.buildMain)
     app.add_app("Подсчет коэффициентов прямых материальных затрат.", main.buildMain)
     app.add_app("Рассчет коэффициентов прямых и полных затрат труда и фондов и плановую потребность.", trudAndFond.buildMain)
-    app.add_app("Основное балансовое соотношение", testcase.buildMain)
+    app.add_app("Основное балансовое соотношение", balans.buildMain)
     app.run()
     with st.sidebar:
         st.write("")
         st.write("")
-        st.write("")
+        st.write("----------")
+        with open("apps/manual.pdf", "rb") as pdf_file:
+            PDFbyte = pdf_file.read()
+
+        st.download_button(label="Руководство пользователя",
+                           data=PDFbyte,
+                           file_name="Руководство пользователя.pdf",
+                           mime='application/octet-stream')
         st.write("----------")
         authenticator.logout('Выйти из системы', 'main')
 elif st.session_state['authentication_status'] == False:
