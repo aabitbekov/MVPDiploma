@@ -24,8 +24,7 @@ def buildMain():
         with left_col:
             st.title("Научно-производственный центр «Геодезия и картография»")
             st.write(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.")
-
+                "«Геодезия и картография» качественная подготовка специалистов в области геодезии и картографии, научно- исследовательских институтов, производственных организации, национальных и региональных земельных комитетов для получения измерительной пространственной информации о поверхности Земли, ее недрах, объектах поверхности Земли или отдельных ее территорий на планах и картах")
         with right_col:
             st_lottie(animation, height=350, key="animation")
 
@@ -42,8 +41,7 @@ def buildMain():
         with right_col:
             st.write("##")
             st.write(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.")
-
+                "Мы применяем инновационные технологические решения, чтобы улучшить условия обслуживания пользователей, способствуем обеспечению сохранности и востребованности материалов фонда. Вся наша команда ориентирована на информатизацию экономики и общества, предоставление и распространение пространственных данных!Реорганизация в установленном законодательством порядке РГП «Казгеодезия» и «Национальный картографо-геодезический фонд», находящиеся в ведении комитета геодезии и картографии министерства цифрового развития, инноваций и аэрокосмической промышленности РК, путем слияния и преобразования в РГП на ПХВ «Национальный центр геодезии и пространственной информации» комитета геодезии и картографии министерства цифрового развития, инноваций и аэрокосмической промышленности РК.")
     st.write("---")
 
     with st.container():
@@ -51,8 +49,10 @@ def buildMain():
 
         with left_col:
             st.header("Контакты:")
-            st.text("Тел: 87081053795, 87272208008")
-            st.text("e-mail: npc_gc@mail.ru")
+            st.text("Тел: +7 (727) 226 73 04,  +7 (727) 226 73 05")
+            st.text("e-mail: info@nkgf.kz")
+            st.text("Адрес:  Алматы, ул. Есенберлина, 36")
+            st.text("Время работы:  С понедельника по пятницу 9:00 — 18:30")
 
         with right_col:
             st_lottie(contact_gif, height=250, key="contact_gif")

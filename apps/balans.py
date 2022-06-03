@@ -1,8 +1,7 @@
-import pandas as pd
 import streamlit as st
-from streamlit import StreamlitAPIException
 import read
 import webbrowser
+
 
 @st.cache
 def convert_df(df):
@@ -18,36 +17,27 @@ def buildMain():
 
     with st.expander("Инструкции по использованию"):
         st.info("""
-           В этих инструкциях вы найдете информацию о требованиях к входным файлам для расчета, также вы можете скачать шаблон таблицы.
-       """)
+              В этих инструкциях вы найдете информацию о требованиях к входным файлам для расчета, также вы можете скачать шаблон таблицы.
+          """)
         if st.button("Инструкция"):
             webbrowser.open_new_tab(
                 "https://docs.google.com/document/d/1GtSvtRwEtLHP98ZprLIr2mA5w6VqKjrZ/edit?usp=sharing&ouid=111050107448852221170&rtpof=true&sd=true")
 
+
     uploaded_file = st.file_uploader("Выберите таблицу", type=['xlsx'])
+
     if uploaded_file:
+
         path = read.save_uploadedfile(uploaded_file)
         sheet = read.readDocument(path)
-        main_matrix, end_pruducts = read.readBigMainMatrix(sheet)
-        error = False
-        try:
-            pd.DataFrame(main_matrix)
-        except StreamlitAPIException:
-            error = True
-            st.error("Этот файл не подходит для расчета. Пожалуйста, проверьте шаблон таблицы в описании.")
-        if not error:
+
+        if not read.checkFormatBalans(sheet):
+            main_matrix, end_pruducts = read.readBigMainMatrix(sheet)
             itogo_by_row, itogo_by_col = [], []
             for matrix in main_matrix:
                 sum_by_row = 0
                 for value in matrix:
-                    try:
-                        sum_by_row += value
-                    except TypeError:
-                        error = True
-                        st.error("Этот файл не подходит для расчета. Пожалуйста, проверьте шаблон таблицы в описании.")
-                if error:
-                    break
-                else:
+                    sum_by_row += value
                     itogo_by_row.append(sum_by_row)
             itogo_by_col = [0] * len(itogo_by_row)
             for matrix in main_matrix:
@@ -96,26 +86,26 @@ def buildMain():
             main_matrix.append(dob_st)
             main_matrix.append(val_price_by_col)
 
-        import xlsxwriter
-        from io import BytesIO
+            import xlsxwriter
+            from io import BytesIO
 
-        output = BytesIO()
+            output = BytesIO()
+            workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+            worksheet = workbook.add_worksheet()
 
-        # Write files to in-memory strings using BytesIO
-        # See: https://xlsxwriter.readthedocs.io/workbook.html?highlight=BytesIO#constructor
-        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
-        worksheet = workbook.add_worksheet()
+            row = 0
+            for col, data in enumerate(main_matrix):
+                worksheet.write_column(row, col, data)
+            workbook.close()
 
-        row = 0
-        for col, data in enumerate(main_matrix):
-            worksheet.write_column(row, col, data)
-        workbook.close()
+            st.download_button(
+                label="Скачать таблицу",
+                data=output.getvalue(),
+                file_name="workbook.xlsx",
+                mime="application/vnd.ms-excel"
+            )
 
-        st.download_button(
-            label="Скачать таблицу",
-            data=output.getvalue(),
-            file_name="workbook.xlsx",
-            mime="application/vnd.ms-excel"
-        )
+        else:
+            st.error("Этот файл не подходит для расчета. Пожалуйста, проверьте шаблон таблицы в описании.")
 
 
