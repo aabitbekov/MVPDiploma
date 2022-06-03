@@ -2,7 +2,7 @@ import numpy as np
 import streamlit as st
 import pandas as pd
 import webbrowser
-import db
+# import db
 import read
 
 
@@ -85,7 +85,7 @@ def buildMain():
                 workbook = xlsxwriter.Workbook(output, {'in_memory': True})
                 worksheet = workbook.add_worksheet()
 
-                db.createDoc(inputdocument='streamlitapp/excelFiles/{}'.format(uploaded_file.name), infunc=1)
+                # db.createDoc(inputdocument='streamlitapp/excelFiles/{}'.format(uploaded_file.name), infunc=1)
                 row = 0
                 for col, data in enumerate(koef_pryamyx_zatrat):
                     worksheet.write_column(row, col, data)
