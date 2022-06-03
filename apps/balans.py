@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 from streamlit import StreamlitAPIException
 import read
-
+import webbrowser
 
 @st.cache
 def convert_df(df):
@@ -15,6 +15,14 @@ def buildMain():
     st.write("""Применение межотраслевого баланса для анализа экономического показателя труда.
 Различные модификации рассмотренной выше модели межотраслевого баланса производства и распределения продукции в народном хозяйстве позволяют расширить круг показателей, охватываемых моделью
     """)
+
+    with st.expander("Инструкции по использованию"):
+        st.info("""
+           В этих инструкциях вы найдете информацию о требованиях к входным файлам для расчета, также вы можете скачать шаблон таблицы.
+       """)
+        if st.button("Инструкция"):
+            webbrowser.open_new_tab(
+                "https://docs.google.com/document/d/1GtSvtRwEtLHP98ZprLIr2mA5w6VqKjrZ/edit?usp=sharing&ouid=111050107448852221170&rtpof=true&sd=true")
 
     uploaded_file = st.file_uploader("Выберите таблицу", type=['xlsx'])
     if uploaded_file:

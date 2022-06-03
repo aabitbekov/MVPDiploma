@@ -1,6 +1,8 @@
 import numpy as np
 import streamlit as st
 import pandas as pd
+import webbrowser
+import db
 import read
 
 
@@ -19,6 +21,22 @@ def buildMain():
 
     st.markdown("***")
 
+    with st.expander("Инструкции по использованию"):
+        st.info("""
+           В этих инструкциях вы найдете информацию о требованиях к входным файлам для расчета, также вы можете скачать шаблон таблицы.
+       """)
+        with st.container():
+            col1, col2 = st.columns([1, 4])
+            with col1:
+                if st.button("Инструкция"):
+                    webbrowser.open_new_tab(
+                        "https://docs.google.com/document/d/1GtSvtRwEtLHP98ZprLIr2mA5w6VqKjrZ/edit?usp=sharing&ouid=111050107448852221170&rtpof=true&sd=true")
+            with col2:
+                if st.button("Шаблон таблицы"):
+                    webbrowser.open_new_tab(
+                        "https://docs.google.com/spreadsheets/d/1wXDrTJWpt8u1ySvC0c1beAQcRS4g6ROJ/edit?usp=sharing&ouid=111050107448852221170&rtpof=true&sd=true")
+
+    st.markdown("***")
     uploaded_file = st.file_uploader("Выберите таблицу", type=['xlsx', 'csv'])
     if uploaded_file:
         path = read.save_uploadedfile(uploaded_file)
@@ -67,11 +85,11 @@ def buildMain():
                 workbook = xlsxwriter.Workbook(output, {'in_memory': True})
                 worksheet = workbook.add_worksheet()
 
+                db.createDoc(inputdocument='streamlitapp/excelFiles/{}'.format(uploaded_file.name), infunc=1)
                 row = 0
                 for col, data in enumerate(koef_pryamyx_zatrat):
                     worksheet.write_column(row, col, data)
                 workbook.close()
-
                 st.download_button(
                     label="Скачать таблицу",
                     data=output.getvalue(),
@@ -80,5 +98,4 @@ def buildMain():
                 )
         else:
             st.error("Этот файл не подходит для расчета. Пожалуйста, проверьте шаблон таблицы в описании.")
-
 

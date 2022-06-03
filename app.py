@@ -50,7 +50,7 @@ if st.session_state['authentication_status']:
         st.write("")
         st.write("")
         st.write("----------")
-        with open("apps/manual.pdf", "rb") as pdf_file:
+        with open("excelFiles/manual/manual.pdf", "rb") as pdf_file:
             PDFbyte = pdf_file.read()
 
         st.download_button(label="Руководство пользователя",
