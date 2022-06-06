@@ -34,6 +34,7 @@ authenticator = stauth.Authenticate(names, usernames, hashed_passwords,
 #
 with st.sidebar:
     st.title("Центр технологической компетенции в области цифровизации АПК КАТУ им. С.Сейфуллина")
+    st.write("----")
     name, authentication_status, username = authenticator.login('Войти в систему', 'main')
 if not st.session_state['authentication_status']:
     landing.buildMain()
@@ -61,7 +62,9 @@ if st.session_state['authentication_status']:
         authenticator.logout('Выйти из системы', 'main')
 elif st.session_state['authentication_status'] == False:
     with st.sidebar:
+        st.write("----------")
         st.error('Неверное имя пользователя/пароль')
 elif st.session_state['authentication_status'] == None:
     with st.sidebar:
+        st.write("----------")
         st.warning('Пожалуйста, введите имя пользователя и пароль')
