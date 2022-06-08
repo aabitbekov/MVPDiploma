@@ -12,18 +12,13 @@ def buildMain():
         st.info("""
            В этих инструкциях вы найдете информацию о требованиях к входным файлам для расчета, также вы можете скачать шаблон таблицы.
        """)
-        with st.container():
-            col1, col2 = st.columns([1, 4])
-            with col1:
-                if st.button("Инструкция"):
-                    webbrowser.open_new_tab(
-                        "https://docs.google.com/document/d/1GtSvtRwEtLHP98ZprLIr2mA5w6VqKjrZ/edit?usp=sharing&ouid=111050107448852221170&rtpof=true&sd=true")
-            with col2:
-                if st.button("Шаблон таблицы"):
-                    webbrowser.open_new_tab(
-                        "https://docs.google.com/spreadsheets/d/1wXDrTJWpt8u1ySvC0c1beAQcRS4g6ROJ/edit?usp=sharing&ouid=111050107448852221170&rtpof=true&sd=true")
-
-    st.markdown("***")
+        st.markdown('''
+             <div class="row-widget stButton" style="margin:20px 0">
+               <a href="https://docs.google.com/document/d/1lU4yq6mLy87De1oz7lhG5V7N39NXnZGQ/edit" kind="primary" style="text-decoration: none" class="css-2r05pe edgvbvh9">Инструкция</a>
+               <a href="https://docs.google.com/spreadsheets/d/175sgDy6sk2jIboSKH02y1ZxwS6j8GtHc/edit" kind="primary" style="text-decoration: none" class="css-2r05pe edgvbvh9">Шаблон таблицы</a>
+             </div>
+            ''', unsafe_allow_html=True)
+        st.markdown("***")
 
     uploaded_file = st.file_uploader("Выберите таблицу", type=['xlsx'])
     if uploaded_file:

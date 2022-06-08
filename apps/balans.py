@@ -19,10 +19,11 @@ def buildMain():
         st.info("""
               В этих инструкциях вы найдете информацию о требованиях к входным файлам для расчета, также вы можете скачать шаблон таблицы.
           """)
-        if st.button("Инструкция"):
-            webbrowser.open_new_tab(
-                "https://docs.google.com/document/d/1GtSvtRwEtLHP98ZprLIr2mA5w6VqKjrZ/edit?usp=sharing&ouid=111050107448852221170&rtpof=true&sd=true")
-
+        st.markdown('''
+                  <div class="row-widget stButton" style="margin:20px 0">
+                    <a href="https://docs.google.com/document/d/1lU4yq6mLy87De1oz7lhG5V7N39NXnZGQ/edit" kind="primary" style="text-decoration: none" class="css-2r05pe edgvbvh9">Инструкция</a>
+                  </div>
+                 ''', unsafe_allow_html=True)
 
     uploaded_file = st.file_uploader("Выберите таблицу", type=['xlsx'])
 
