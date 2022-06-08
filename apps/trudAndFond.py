@@ -18,8 +18,7 @@ def buildMain():
                <a href="https://docs.google.com/spreadsheets/d/175sgDy6sk2jIboSKH02y1ZxwS6j8GtHc/edit" kind="primary" style="text-decoration: none" class="css-2r05pe edgvbvh9">Шаблон таблицы</a>
              </div>
             ''', unsafe_allow_html=True)
-        st.markdown("***")
-
+    st.markdown("***")
     uploaded_file = st.file_uploader("Выберите таблицу", type=['xlsx'])
     if uploaded_file:
         path = read.save_uploadedfile(uploaded_file)
