@@ -46,6 +46,7 @@ if st.session_state['authentication_status']:
     app.add_app("Подсчет коэффициентов прямых материальных затрат.", main.buildMain)
     app.add_app("Рассчет коэффициентов прямых и полных затрат труда и фондов и плановую потребность.", trudAndFond.buildMain)
     app.add_app("Основное балансовое соотношение", balans.buildMain)
+    # app.add_app("Основное балансовое соотношение", testcase.buildMain)
     app.run()
     with st.sidebar:
         st.write("")

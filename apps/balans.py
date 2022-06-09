@@ -39,13 +39,15 @@ def buildMain():
                 sum_by_row = 0
                 for value in matrix:
                     sum_by_row += value
-                    itogo_by_row.append(sum_by_row)
+                itogo_by_row.append(sum_by_row)
+            #
             itogo_by_col = [0] * len(itogo_by_row)
             for matrix in main_matrix:
                 index = 0
                 for value in matrix:
                     itogo_by_col[index] += value
                     index += 1
+            #
 
             val_price = []
             for i in range(len(end_pruducts)):
