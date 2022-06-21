@@ -33,9 +33,10 @@ authenticator = stauth.Authenticate(names, usernames, hashed_passwords,
 
 #
 with st.sidebar:
-    st.title("Центр технологической компетенции в области цифровизации АПК КАТУ им. С.Сейфуллина")
+    st.title("Министерство сельского хозяйства Республики Казахстан НАО Казахский агротехнический университет им. С.Сейфуллина")
     st.write("----")
     name, authentication_status, username = authenticator.login('Войти в систему', 'main')
+
 if not st.session_state['authentication_status']:
     landing.buildMain()
 
@@ -61,6 +62,10 @@ if st.session_state['authentication_status']:
                            mime='application/octet-stream')
         st.write("----------")
         authenticator.logout('Выйти из системы', 'main')
+
+        st.subheader("Научно-техническая программа BR 10764919 «Исследование влияния государственной политики в отрасли сельского хозяйства на развитие кооперационных процессов в АПК, устойчивого развития сельских территорий и обеспечения продовольственной безопасности» на 2021-2023 гг.")
+        st.subheader("Руководитель НТП:")
+        st.subheader("ӘЛІПБЕКИ Оңғарбек Әліпбекұлы,доктор биологических наук, профессор биологии,Академик Международной академии информатизации и Казахстанской национальной академии естественных наук Республики Казахстан")
 elif st.session_state['authentication_status'] == False:
     with st.sidebar:
         st.write("----------")
